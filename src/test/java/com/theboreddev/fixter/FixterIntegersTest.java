@@ -11,7 +11,7 @@ public class FixterIntegersTest {
     @Test
     public void shouldPopulateACollectionOfIntegers() {
 
-        List<Integer> integers = new Fixter<Integer>(10, Integer.class).apply();
+        List<Integer> integers = Fixter.of(10, Integer.class).apply();
 
         assertThat(integers).hasSize(10).allMatch(number -> number > 0 && number <= 100);
     }
@@ -19,7 +19,7 @@ public class FixterIntegersTest {
     @Test
     public void shouldPopulateACollectionOfIntegersWithCustomSupplier() {
 
-        List<Integer> integers = new Fixter<Integer>(10, Integer.class)
+        List<Integer> integers = Fixter.of(10, Integer.class)
                 .withSupplier(() -> Random.randomInt(10))
                 .apply();
 

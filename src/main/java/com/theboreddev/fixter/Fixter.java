@@ -8,23 +8,27 @@ import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.toList;
 
-public class Fixter<T> {
+public class Fixter {
     private final int size;
     private final Class<?> type;
-    private Supplier<T> supplier;
+    private Supplier<?> supplier;
     private final Map<String, Supplier<?>> fieldSuppliers = new HashMap<>();
 
-    public Fixter(int size, Class<?> type) {
+    private Fixter(int size, Class<?> type) {
         this.size = size;
         this.type = type;
     }
 
-    public Fixter<T> withSupplier(Supplier<T> supplier) {
+    public static Fixter of(int size, Class<?> type) {
+        return new Fixter(size, type);
+    }
+
+    public <T> Fixter withSupplier(Supplier<T> supplier) {
         this.supplier = supplier;
         return this;
     }
 
-    public <U> Fixter<T> withFieldSupplier(String fieldName, Supplier<U> supplier) {
+    public <U> Fixter withFieldSupplier(String fieldName, Supplier<U> supplier) {
         if (type.isPrimitive()) {
             throw new IllegalArgumentException("Cannot set field supplier for a simple type!");
         }
@@ -32,7 +36,7 @@ public class Fixter<T> {
         return this;
     }
 
-    public List<T> apply() {
+    public <T> List<T> apply() {
         return (List<T>) Stream.generate(() -> supplier != null ? new ElementSupplier(supplier, type).supplyElement() : new ElementSupplier<>(fieldSuppliers, type).supplyElement())
                 .limit(size)
                 .collect(toList());

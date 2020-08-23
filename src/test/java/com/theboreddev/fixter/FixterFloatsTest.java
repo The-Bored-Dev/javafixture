@@ -11,7 +11,7 @@ public class FixterFloatsTest {
     @Test
     public void shouldPopulateACollectionOfLongs() {
 
-        List<Float> floats = new Fixter<Float>(10, Float.class).apply();
+        List<Float> floats = Fixter.of(10, Float.class).apply();
 
         assertThat(floats).hasSize(10).allMatch(number -> number >= 1.0 && number <= 100.0);
     }
@@ -19,7 +19,7 @@ public class FixterFloatsTest {
     @Test
     public void shouldPopulateACollectionOfLongsWithCustomSupplier() {
 
-        List<Float> floats = new Fixter<Float>(10, Float.class)
+        List<Float> floats = Fixter.of(10, Float.class)
                 .withSupplier(() -> Random.randomFloat(10))
                 .apply();
 

@@ -11,7 +11,7 @@ public class FixterStringsTest {
     @Test
     public void shouldPopulateACollectionOfStrings() {
 
-        List<String> strings = new Fixter<String>(10, String.class).apply();
+        List<String> strings = Fixter.of(10, String.class).apply();
 
         assertThat(strings).hasSize(10).allMatch(string -> string.length() == 5);
     }
@@ -19,7 +19,7 @@ public class FixterStringsTest {
     @Test
     public void shouldPopulateACollectionOfStringsWithACustomSupplier() {
 
-        List<String> strings = new Fixter<String>(10, String.class).withSupplier(() -> String.valueOf(Random.randomInt(100))).apply();
+        List<String> strings = Fixter.of(10, String.class).withSupplier(() -> String.valueOf(Random.randomInt(100))).apply();
 
         assertThat(strings).hasSize(10).allMatch(string -> Integer.parseInt(string) > 0);
     }
