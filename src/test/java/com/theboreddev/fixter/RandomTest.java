@@ -2,6 +2,8 @@ package com.theboreddev.fixter;
 
 import org.junit.Test;
 
+import java.math.BigDecimal;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class RandomTest {
@@ -20,5 +22,13 @@ public class RandomTest {
         int randomInt = Random.randomInt(100);
 
         assertThat(randomInt).isGreaterThanOrEqualTo(1).isLessThanOrEqualTo(100);
+    }
+
+    @Test
+    public void shouldGenerateARandomBigDecimal() {
+
+        BigDecimal bigDecimal = Random.randomBigDecimal(new BigDecimal(100));
+
+        assertThat(bigDecimal).isBetween(BigDecimal.ONE, new BigDecimal(100));
     }
 }

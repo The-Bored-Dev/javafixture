@@ -1,5 +1,7 @@
 package com.theboreddev.fixter;
 
+import java.math.BigDecimal;
+
 public class Random {
 
     private static final String ALPHA_NUMERIC_STRING = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
@@ -50,5 +52,14 @@ public class Random {
 
     public static boolean randomBoolean() {
         return Math.random() < 0.5;
+    }
+
+    public static BigDecimal randomBigDecimal(BigDecimal limit) {
+        BigDecimal min = BigDecimal.ONE;
+        return BigDecimal.valueOf(Math.random()).multiply(limit.subtract(min).add(BigDecimal.ONE)).add(min);
+    }
+
+    public static BigDecimal randomBigDecimal(BigDecimal min, BigDecimal limit) {
+        return BigDecimal.valueOf(Math.random()).multiply(limit.subtract(min).add(BigDecimal.ONE)).add(min);
     }
 }

@@ -2,6 +2,8 @@ package com.theboreddev.fixter;
 
 import org.junit.Test;
 
+import java.math.BigDecimal;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class ElementSupplierTest {
@@ -88,6 +90,25 @@ public class ElementSupplierTest {
         ElementSupplier<Float> supplier = new ElementSupplier<>(() -> Random.randomFloat(min, Float.MAX_VALUE), Long.class);
 
         assertThat(supplier.supplyElement()).isGreaterThanOrEqualTo(min).isLessThanOrEqualTo(Float.MAX_VALUE);
+    }
+
+    @Test
+    public void shouldSupplyBigDecimalUsingDefaultSupplier() {
+
+        ElementSupplier<BigDecimal> supplier = new ElementSupplier<>(BigDecimal.class);
+
+        assertThat(supplier.supplyElement()).isGreaterThan(new BigDecimal(0)).isLessThanOrEqualTo(new BigDecimal(100));
+    }
+
+    @Test
+    public void shouldSupplyBigDecimalUsingCustomSupplier() {
+
+        BigDecimal min = new BigDecimal(1_000_000_000_000L);
+        BigDecimal max = new BigDecimal(1_000_000_000_000_000L);
+
+        ElementSupplier<BigDecimal> supplier = new ElementSupplier<>(() -> Random.randomBigDecimal(min, max), BigDecimal.class);
+
+        assertThat(supplier.supplyElement()).isGreaterThanOrEqualTo(min).isLessThanOrEqualTo(max);
     }
 
     @Test

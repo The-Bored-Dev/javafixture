@@ -1,5 +1,6 @@
 package com.theboreddev.fixter;
 
+import java.math.BigDecimal;
 import java.util.Map;
 import java.util.function.Supplier;
 
@@ -55,6 +56,8 @@ public class ElementSupplier<T> {
             return Random.randomFloat(DEFAULT_LIMIT);
         } else if (type.equals(Boolean.class) || type.equals(boolean.class)) {
             return Random.randomBoolean();
+        } else if (type.equals(BigDecimal.class)) {
+            return Random.randomBigDecimal(new BigDecimal(DEFAULT_LIMIT));
         } else {
             return ObjectSupplier.supplyObject(type, fieldSuppliers);
         }
