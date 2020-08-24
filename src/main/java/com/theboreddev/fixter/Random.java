@@ -1,6 +1,7 @@
 package com.theboreddev.fixter;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 
 public class Random {
 
@@ -61,5 +62,14 @@ public class Random {
 
     public static BigDecimal randomBigDecimal(BigDecimal min, BigDecimal limit) {
         return BigDecimal.valueOf(Math.random()).multiply(limit.subtract(min).add(BigDecimal.ONE)).add(min);
+    }
+
+    public static BigInteger randomBigInteger(BigInteger limit) {
+        BigInteger min = BigInteger.ONE;
+        return BigInteger.valueOf((long) Math.random()).multiply(limit.subtract(min).add(BigInteger.ONE)).add(min);
+    }
+
+    public static BigInteger randomBigInteger(BigInteger min, BigInteger limit) {
+        return BigInteger.valueOf((long) Math.random()).multiply(limit.subtract(min).add(BigInteger.ONE)).add(min);
     }
 }

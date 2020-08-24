@@ -1,6 +1,7 @@
 package com.theboreddev.fixter;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.Map;
 import java.util.function.Supplier;
 
@@ -58,6 +59,11 @@ public class ElementSupplier<T> {
             return Random.randomBoolean();
         } else if (type.equals(BigDecimal.class)) {
             return Random.randomBigDecimal(new BigDecimal(DEFAULT_LIMIT));
+        } else if (type.equals(BigInteger.class)) {
+            return Random.randomBigInteger(new BigInteger(String.valueOf(DEFAULT_LIMIT)));
+        } else if(type.isEnum()) {
+            int randomInt = Random.randomInt(0, type.getEnumConstants().length - 1);
+            return type.getEnumConstants()[randomInt];
         } else {
             return ObjectSupplier.supplyObject(type, fieldSuppliers);
         }

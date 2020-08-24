@@ -3,6 +3,7 @@ package com.theboreddev.fixter;
 import org.junit.Test;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -112,6 +113,25 @@ public class ElementSupplierTest {
     }
 
     @Test
+    public void shouldSupplyBigIntegerUsingDefaultSupplier() {
+
+        ElementSupplier<BigInteger> supplier = new ElementSupplier<>(BigInteger.class);
+
+        assertThat(supplier.supplyElement()).isGreaterThan(new BigInteger("0")).isLessThanOrEqualTo(new BigInteger("100"));
+    }
+
+    @Test
+    public void shouldSupplyBigIntegerUsingCustomSupplier() {
+
+        BigInteger min = new BigInteger("1000000000000");
+        BigInteger max = new BigInteger("1000000000000000");
+
+        ElementSupplier<BigInteger> supplier = new ElementSupplier<>(() -> Random.randomBigInteger(min, max), BigInteger.class);
+
+        assertThat(supplier.supplyElement()).isGreaterThanOrEqualTo(min).isLessThanOrEqualTo(max);
+    }
+
+    @Test
     public void shouldSupplyBooleanUsingDefaultSupplier() {
 
         ElementSupplier<Boolean> supplier = new ElementSupplier<>(Boolean.class);
@@ -125,5 +145,27 @@ public class ElementSupplierTest {
         ElementSupplier<Boolean> supplier = new ElementSupplier<>(() -> true, Boolean.class);
 
         assertThat(supplier.supplyElement()).isTrue();
+    }
+
+    @Test
+    public void shouldSupplyEnumUsingDefaultSupplier() {
+
+        ElementSupplier<EmployeeType> supplier = new ElementSupplier<>(EmployeeType.class);
+
+        assertThat(supplier.supplyElement()).isIn(EmployeeType.PERMANENT, EmployeeType.CONTRACTOR);
+    }
+
+    @Test
+    public void shouldSupplyEnumUsingCustomSupplier() {
+
+        ElementSupplier<EmployeeType> supplier = new ElementSupplier<>(() -> EmployeeType.CONTRACTOR, EmployeeType.class);
+
+        assertThat(supplier.supplyElement()).isEqualTo(EmployeeType.CONTRACTOR);
+    }
+
+
+    enum EmployeeType {
+        PERMANENT,
+        CONTRACTOR
     }
 }
