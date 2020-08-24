@@ -18,6 +18,10 @@ To be able to use Java Fixture, you'll have to download its dependency in your p
 List<Integer> integers = Fixture.of(10, Integer.class).apply();
 ```
 
+Java Fixture supports most of the Java types: String, Integer, Double, Float, Long, BigDecimal and BigInteger.
+
+It also supports any kind of enum, so it will assign a random value of your enum to your object or collection.
+
 #### Initialise an object
 
 1. Using default populator
