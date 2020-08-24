@@ -1,5 +1,6 @@
 package com.theboreddev.fixter;
 
+import java.lang.reflect.Constructor;
 import java.util.function.Supplier;
 
 public class ElementSupplier<T> {
@@ -32,10 +33,12 @@ public class ElementSupplier<T> {
     private Object supplyDefaultValueFor(Class<?> type) {
         if (type.equals(String.class)) {
             return Random.randomAlphaNumeric(DEFAULT_STRING_SIZE);
-        } else if (type.equals(Integer.class)) {
+        } else if (type.equals(Integer.class) || type.equals(int.class)) {
             return Random.randomInt(DEFAULT_LIMIT);
-        } else if (type.equals(Double.class)) {
+        } else if (type.equals(Double.class) || type.equals(double.class)) {
             return Random.randomDouble(DEFAULT_LIMIT);
+        } else if (type instanceof Object) {
+            return ObjectSupplier.supplyObject(type);
         }
         throw new IllegalArgumentException("Type not supported!");
     }
