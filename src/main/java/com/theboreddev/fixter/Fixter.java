@@ -7,50 +7,23 @@ import java.util.stream.Stream;
 import static java.util.stream.Collectors.toList;
 
 public class Fixter<T> {
-
-    private static final int DEFAULT_STRING_SIZE = 5;
-
     private final int size;
-    private final Supplier<T> supplier;
+    private final Class<?> type;
+    private Supplier<T> supplier;
 
-
-    private Fixter(Builder builder) {
-        this.size = builder.size;
-        this.supplier = builder.supplier;
+    public Fixter(int size, Class<?> type) {
+        this.size = size;
+        this.type = type;
     }
 
-    public static Builder of(int size) {
-        return new Builder<>(size);
+    public Fixter<T> withSupplier(Supplier<T> supplier) {
+        this.supplier = supplier;
+        return this;
     }
 
-
-    static class Builder<T> {
-
-        private final int size;
-        private Supplier<T> supplier;
-
-        public Builder(int size) {
-            this.size = size;
-        }
-
-        public Builder withSupplier(Supplier<T> supplier) {
-            this.supplier = supplier;
-            return this;
-        }
-
-        public Fixter<T> build() {
-            return new Fixter(this);
-        }
-    }
-
-    public List<T> fill() {
-        return (List<T>) Stream.generate(() -> supplyString())
+    public List<T> apply() {
+        return (List<T>) Stream.generate(() -> new ElementSupplier(supplier, type).supplyElement())
                 .limit(size)
                 .collect(toList());
-
-    }
-
-    private Object supplyString() {
-        return supplier != null ? supplier.get() : Random.randomAlphaNumeric(DEFAULT_STRING_SIZE);
     }
 }
