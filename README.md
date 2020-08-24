@@ -12,7 +12,7 @@ To be able to use Java Fixture, you'll have to download its dependency in your p
 
 ## Usage
 
-#### Initialise a collection of a Java simple type
+### Initialise a collection of a Java simple type
 
 ```java
 List<Integer> integers = Fixture.of(10, Integer.class).apply();
@@ -22,13 +22,13 @@ Java Fixture supports most of the Java types: String, Integer, Double, Float, Lo
 
 It also supports any kind of enum, so it will assign a random value of your enum to your object or collection.
 
-#### Initialise an object
+### Initialise an object
 
 Java Fixture uses reflection to dynamically initialise objects, it will find a suitable constructor and initialise the object.
 
 If the existing constructor in your object doesn't set all the fields you need, you will have to set a custom field supplier.
 
-You don't have to worry about how complex your object it, as the library is able to populate as many levels of nested objects as you may need. 
+You don't have to worry about how complex your object is, the library is able to populate as many levels of nested objects as you may need. 
 
 1. Using default populator
     ```java
@@ -52,7 +52,7 @@ You don't have to worry about how complex your object it, as the library is able
                     .apply();
     ```
    
-#### Initialise a collection of objects
+### Initialise a collection of objects
 
 1. Using default populator
     ```java
