@@ -1,4 +1,4 @@
-package com.theboreddev.fixter;
+package com.theboreddev.fixture;
 
 import org.junit.Test;
 

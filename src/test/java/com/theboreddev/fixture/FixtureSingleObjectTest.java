@@ -1,15 +1,15 @@
-package com.theboreddev.fixter;
+package com.theboreddev.fixture;
 
 import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class FixterSingleObjectTest {
+public class FixtureSingleObjectTest {
 
     @Test
     public void shouldCreateASingleObjectUsingDefaultSupplier() {
 
-        Employee employee = Fixter.of(Employee.class).apply();
+        Employee employee = Fixture.of(Employee.class).apply();
 
         assertThat(employee).matches(this::isValidEmployee);
     }
@@ -17,7 +17,7 @@ public class FixterSingleObjectTest {
     @Test
     public void shouldCreateASingleObjectUsingCustomSupplier() {
 
-        Employee employee = Fixter.of(Employee.class)
+        Employee employee = Fixture.of(Employee.class)
                 .withSupplier(() -> new Employee(
                         Random.randomAlphaNumeric(10),
                         Random.randomAlphaNumeric(10),
@@ -32,7 +32,7 @@ public class FixterSingleObjectTest {
     @Test
     public void shouldCreateASingleObjectUsingDefaultSupplierWithFieldSupplier() {
 
-        Employee employee = Fixter.of(Employee.class)
+        Employee employee = Fixture.of(Employee.class)
                 .withFieldSupplier("age", () -> Random.randomInt(18, 100))
                 .apply();
 

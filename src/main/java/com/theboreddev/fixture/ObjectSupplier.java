@@ -1,4 +1,4 @@
-package com.theboreddev.fixter;
+package com.theboreddev.fixture;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;

@@ -1,4 +1,4 @@
-package com.theboreddev.fixter;
+package com.theboreddev.fixture;
 
 import org.junit.Test;
 
@@ -6,12 +6,12 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class FixterComplexObjectTest {
+public class FixtureComplexObjectTest {
 
     @Test
     public void shouldPopulateACollectionOfObjects() {
 
-        List<Employee> employees = Fixter.of(10, Employee.class).apply();
+        List<Employee> employees = Fixture.of(10, Employee.class).apply();
 
         assertThat(employees).hasSize(10).allMatch(this::isValidEmployee);
     }
@@ -19,7 +19,7 @@ public class FixterComplexObjectTest {
     @Test
     public void shouldPopulateACollectionOfObjectsRestrictingTheValueOfOneField() {
 
-        List<Employee> employees = Fixter.of(10, Employee.class)
+        List<Employee> employees = Fixture.of(10, Employee.class)
                 .withFieldSupplier("age", () -> Random.randomInt(18, 150))
                 .apply();
 
@@ -29,7 +29,7 @@ public class FixterComplexObjectTest {
     @Test
     public void shouldPopulateACollectionOfObjectsRestrictingTheValueOfMultipleFields() {
 
-        List<Employee> employees = Fixter.of(10, Employee.class)
+        List<Employee> employees = Fixture.of(10, Employee.class)
                 .withFieldSupplier("age", () -> Random.randomInt(18, 150))
                 .withFieldSupplier("salary", () -> Random.randomInt(8000, 100000))
                 .apply();
@@ -42,13 +42,13 @@ public class FixterComplexObjectTest {
     @Test
     public void shouldRaiseExceptionIfFieldSupplierIsSpecifiedForASimpleType() {
 
-        Fixter.of(10, String.class).withFieldSupplier("field", () -> Random.randomAlphaNumeric(10));
+        Fixture.of(10, String.class).withFieldSupplier("field", () -> Random.randomAlphaNumeric(10));
     }
 
     @Test
     public void shouldPopulateACollectionOfObjectsWithACustomSupplier() {
 
-        List<Employee> employees = Fixter.of(10, Employee.class).withSupplier(() -> new Employee(
+        List<Employee> employees = Fixture.of(10, Employee.class).withSupplier(() -> new Employee(
                 Random.randomAlphaNumeric(10),
                 Random.randomAlphaNumeric(20),
                 Random.randomInt(100),

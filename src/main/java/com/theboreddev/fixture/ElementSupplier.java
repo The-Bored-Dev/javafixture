@@ -1,4 +1,4 @@
-package com.theboreddev.fixter;
+package com.theboreddev.fixture;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;

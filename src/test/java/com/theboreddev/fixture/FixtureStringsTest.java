@@ -1,4 +1,4 @@
-package com.theboreddev.fixter;
+package com.theboreddev.fixture;
 
 import org.junit.Test;
 
@@ -6,12 +6,12 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class FixterStringsTest {
+public class FixtureStringsTest {
 
     @Test
     public void shouldPopulateACollectionOfStrings() {
 
-        List<String> strings = Fixter.of(10, String.class).apply();
+        List<String> strings = Fixture.of(10, String.class).apply();
 
         assertThat(strings).hasSize(10).allMatch(string -> string.length() == 5);
     }
@@ -19,7 +19,7 @@ public class FixterStringsTest {
     @Test
     public void shouldPopulateACollectionOfStringsWithACustomSupplier() {
 
-        List<String> strings = Fixter.of(10, String.class).withSupplier(() -> String.valueOf(Random.randomInt(100))).apply();
+        List<String> strings = Fixture.of(10, String.class).withSupplier(() -> String.valueOf(Random.randomInt(100))).apply();
 
         assertThat(strings).hasSize(10).allMatch(string -> Integer.parseInt(string) > 0);
     }
