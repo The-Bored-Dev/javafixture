@@ -14,12 +14,19 @@ public class Random {
     }
 
     public static int randomInt(int limit) {
-        int min = 1;
+        return randomInt(1, limit);
+    }
+
+    public static int randomInt(int min, int limit) {
         return (int) (Math.random() * (limit - min + 1) + min);
     }
 
     public static double randomDouble(int limit) {
         double min = 1;
+        return (int) (Math.random() * (limit - min + 1) + min);
+    }
+
+    public static double randomDouble(int min, int limit) {
         return (int) (Math.random() * (limit - min + 1) + min);
     }
 }

@@ -11,22 +11,45 @@ public class FixterPlainObjectTest {
     @Test
     public void shouldPopulateACollectionOfObjects() {
 
-        List<Employee> strings = new Fixter<Employee>(10, Employee.class).apply();
+        List<Employee> employees = new Fixter<Employee>(10, Employee.class).apply();
 
-        assertThat(strings).hasSize(10).allMatch(this::isValidEmployee);
+        assertThat(employees).hasSize(10).allMatch(this::isValidEmployee);
+    }
+
+    @Test
+    public void shouldPopulateACollectionOfObjectsRestrictingTheValueOfOneField() {
+
+        List<Employee> employees = new Fixter<Employee>(10, Employee.class)
+                .withFieldSupplier("age", () -> Random.randomInt(18, 150))
+                .apply();
+
+        assertThat(employees).hasSize(10).allMatch(employee -> employee.getAge() >= 18 && employee.getAge() <= 150);
+    }
+
+    @Test
+    public void shouldPopulateACollectionOfObjectsRestrictingTheValueOfMultipleFields() {
+
+        List<Employee> employees = new Fixter<Employee>(10, Employee.class)
+                .withFieldSupplier("age", () -> Random.randomInt(18, 150))
+                .withFieldSupplier("salary", () -> Random.randomInt(8000, 100000))
+                .apply();
+
+        assertThat(employees).hasSize(10)
+                .allMatch(employee -> employee.getAge() >= 18 && employee.getAge() <= 150)
+                .allMatch(employee -> employee.getSalary() >= 8000 && employee.getSalary() <= 100000);
     }
 
     @Test
     public void shouldPopulateACollectionOfObjectsWithACustomSupplier() {
 
-        List<Employee> strings = new Fixter<Employee>(10, Employee.class).withSupplier(() -> new Employee(
+        List<Employee> employees = new Fixter<Employee>(10, Employee.class).withSupplier(() -> new Employee(
                 Random.randomAlphaNumeric(10),
                 Random.randomAlphaNumeric(20),
                 Random.randomInt(100),
                 Random.randomDouble(100000)
         )).apply();
 
-        assertThat(strings).hasSize(10).allMatch(this::isValidEmployeeWithSomeRestrictions);
+        assertThat(employees).hasSize(10).allMatch(this::isValidEmployeeWithSomeRestrictions);
     }
 
 
