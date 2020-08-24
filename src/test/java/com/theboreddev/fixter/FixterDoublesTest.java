@@ -23,8 +23,6 @@ public class FixterDoublesTest {
                 .withSupplier(() -> Random.randomDouble(10))
                 .apply();
 
-        System.out.println(doubles);
-
         assertThat(doubles).hasSize(10).allMatch(number -> number >= 1.0 && number <= 10);
     }
 
