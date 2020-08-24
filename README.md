@@ -24,6 +24,12 @@ It also supports any kind of enum, so it will assign a random value of your enum
 
 #### Initialise an object
 
+Java Fixture uses reflection to dynamically initialise objects, it will find a suitable constructor and initialise the object.
+
+If the existing constructor in your object doesn't set all the fields you need, you will have to set a custom field supplier.
+
+You don't have to worry about how complex your object it, as the library is able to populate as many levels of nested objects as you may need. 
+
 1. Using default populator
     ```java
     Employee employee = Fixture.of(Employee.class).apply();
@@ -39,7 +45,7 @@ It also supports any kind of enum, so it will assign a random value of your enum
                     ))
                     .apply();
     ```
-3. Using custom field suppliers (uses Reflection)
+3. Using custom field suppliers
     ```java
     Employee employee = Fixture.of(Employee.class)
                     .withFieldSupplier("age", () -> Random.randomInt(18, 100))
