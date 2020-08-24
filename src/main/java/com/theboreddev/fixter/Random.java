@@ -31,11 +31,20 @@ public class Random {
     }
 
     public static long randomLong(long limit) {
-        double min = 1;
+        long min = 1;
         return (long) (Math.random() * (limit - min + 1) + min);
     }
 
     public static long randomLong(long min, long limit) {
         return (long) (Math.random() * (limit - min + 1) + min);
+    }
+
+    public static float randomFloat(float limit) {
+        float min = 1;
+        return (float) (Math.random() * (limit - min + 1) + min);
+    }
+
+    public static float randomFloat(float min, float limit) {
+        return (float) (Math.random() * (limit - min + 1) + min);
     }
 }

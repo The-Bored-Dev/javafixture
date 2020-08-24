@@ -71,4 +71,22 @@ public class ElementSupplierTest {
 
         assertThat(supplier.supplyElement()).isGreaterThanOrEqualTo(min).isLessThanOrEqualTo(Long.MAX_VALUE);
     }
+
+    @Test
+    public void shouldSupplyFloatUsingDefaultSupplier() {
+
+        ElementSupplier<Float> supplier = new ElementSupplier<>(Float.class);
+
+        assertThat(supplier.supplyElement()).isGreaterThan(0).isLessThanOrEqualTo(100);
+    }
+
+    @Test
+    public void shouldSupplyFloatUsingCustomSupplier() {
+
+        long min = 1_000_000_000_000L;
+
+        ElementSupplier<Float> supplier = new ElementSupplier<>(() -> Random.randomFloat(min, Float.MAX_VALUE), Long.class);
+
+        assertThat(supplier.supplyElement()).isGreaterThanOrEqualTo(min).isLessThanOrEqualTo(Float.MAX_VALUE);
+    }
 }

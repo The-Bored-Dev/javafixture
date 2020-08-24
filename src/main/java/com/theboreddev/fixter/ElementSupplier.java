@@ -51,6 +51,8 @@ public class ElementSupplier<T> {
             return Random.randomDouble(DEFAULT_LIMIT);
         } else if (type.equals(Long.class) || type.equals(long.class)) {
             return Random.randomLong(DEFAULT_LIMIT);
+        } else if (type.equals(Float.class) || type.equals(float.class)) {
+            return Random.randomFloat(DEFAULT_LIMIT);
         } else {
             return ObjectSupplier.supplyObject(type, fieldSuppliers);
         }

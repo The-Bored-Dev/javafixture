@@ -32,25 +32,8 @@ public class ObjectSupplier {
     }
 
     public static <T> T supplyObject(Class<T> type, Map<String, Supplier<?>> fieldSuppliers) {
-        Constructor<?>[] declaredConstructors = type.getDeclaredConstructors();
-        Optional<T> first = (Optional<T>) Arrays.stream(declaredConstructors)
-                .map(constructor -> {
-                    Class<?>[] parameterTypes = constructor.getParameterTypes();
-                    Object[] parameters = Arrays.stream(parameterTypes)
-                            .map(parameterType -> new ElementSupplier(parameterType).supplyElement())
-                            .toArray();
-                    Object newInstance = null;
-                    try {
-                        newInstance = constructor.newInstance(parameters);
-                    } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
-                        e.printStackTrace();
-                    }
-                    return newInstance;
-                })
-                .filter(value -> value != null)
-                .findFirst();
+        T object = supplyObject(type);
 
-        T object = first.orElseThrow(() -> new IllegalStateException("Could not instantiate object of type " + type.getSimpleName()));
         fieldSuppliers.keySet()
                 .forEach(fieldName -> {
                     try {
