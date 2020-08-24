@@ -37,4 +37,38 @@ public class ElementSupplierTest {
 
         assertThat(supplier.supplyElement()).isGreaterThan(0).isLessThanOrEqualTo(10);
     }
+
+    @Test
+    public void shouldSupplyDoubleUsingDefaultSupplier() {
+
+        ElementSupplier<Double> supplier = new ElementSupplier<>(Double.class);
+
+        assertThat(supplier.supplyElement()).isGreaterThan(0).isLessThanOrEqualTo(100);
+    }
+
+    @Test
+    public void shouldSupplyDoubleUsingCustomSupplier() {
+
+        ElementSupplier<Double> supplier = new ElementSupplier<>(() -> Random.randomDouble(10), Double.class);
+
+        assertThat(supplier.supplyElement()).isGreaterThan(0).isLessThanOrEqualTo(10);
+    }
+
+    @Test
+    public void shouldSupplyLongUsingDefaultSupplier() {
+
+        ElementSupplier<Long> supplier = new ElementSupplier<>(Long.class);
+
+        assertThat(supplier.supplyElement()).isGreaterThan(0).isLessThanOrEqualTo(100);
+    }
+
+    @Test
+    public void shouldSupplyLongUsingCustomSupplier() {
+
+        long min = 1_000_000_000_000L;
+
+        ElementSupplier<Long> supplier = new ElementSupplier<>(() -> Random.randomLong(min, Long.MAX_VALUE), Long.class);
+
+        assertThat(supplier.supplyElement()).isGreaterThanOrEqualTo(min).isLessThanOrEqualTo(Long.MAX_VALUE);
+    }
 }

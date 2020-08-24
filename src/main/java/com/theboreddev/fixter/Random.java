@@ -29,4 +29,13 @@ public class Random {
     public static double randomDouble(int min, int limit) {
         return (int) (Math.random() * (limit - min + 1) + min);
     }
+
+    public static long randomLong(long limit) {
+        double min = 1;
+        return (long) (Math.random() * (limit - min + 1) + min);
+    }
+
+    public static long randomLong(long min, long limit) {
+        return (long) (Math.random() * (limit - min + 1) + min);
+    }
 }

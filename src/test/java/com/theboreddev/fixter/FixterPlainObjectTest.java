@@ -40,6 +40,12 @@ public class FixterPlainObjectTest {
     }
 
     @Test
+    public void shouldRaiseExceptionIfFieldSupplierIsSpecifiedForASimpleType() {
+
+        new Fixter<String>(10, String.class).withFieldSupplier("field", () -> Random.randomAlphaNumeric(10));
+    }
+
+    @Test
     public void shouldPopulateACollectionOfObjectsWithACustomSupplier() {
 
         List<Employee> employees = new Fixter<Employee>(10, Employee.class).withSupplier(() -> new Employee(
