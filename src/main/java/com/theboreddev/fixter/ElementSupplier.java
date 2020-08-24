@@ -53,6 +53,8 @@ public class ElementSupplier<T> {
             return Random.randomLong(DEFAULT_LIMIT);
         } else if (type.equals(Float.class) || type.equals(float.class)) {
             return Random.randomFloat(DEFAULT_LIMIT);
+        } else if (type.equals(Boolean.class) || type.equals(boolean.class)) {
+            return Random.randomBoolean();
         } else {
             return ObjectSupplier.supplyObject(type, fieldSuppliers);
         }

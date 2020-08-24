@@ -89,4 +89,20 @@ public class ElementSupplierTest {
 
         assertThat(supplier.supplyElement()).isGreaterThanOrEqualTo(min).isLessThanOrEqualTo(Float.MAX_VALUE);
     }
+
+    @Test
+    public void shouldSupplyBooleanUsingDefaultSupplier() {
+
+        ElementSupplier<Boolean> supplier = new ElementSupplier<>(Boolean.class);
+
+        assertThat(supplier.supplyElement()).isIn(true, false);
+    }
+
+    @Test
+    public void shouldSupplyBooleanUsingCustomSupplier() {
+
+        ElementSupplier<Boolean> supplier = new ElementSupplier<>(() -> true, Boolean.class);
+
+        assertThat(supplier.supplyElement()).isTrue();
+    }
 }

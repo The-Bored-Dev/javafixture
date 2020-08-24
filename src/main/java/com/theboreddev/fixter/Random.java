@@ -40,11 +40,15 @@ public class Random {
     }
 
     public static float randomFloat(float limit) {
-        float min = 1;
-        return (float) (Math.random() * (limit - min + 1) + min);
+        int min = 1;
+        return min + new java.util.Random().nextFloat() * (limit - min);
     }
 
     public static float randomFloat(float min, float limit) {
-        return (float) (Math.random() * (limit - min + 1) + min);
+        return min + new java.util.Random().nextFloat() * (limit - min);
+    }
+
+    public static boolean randomBoolean() {
+        return Math.random() < 0.5;
     }
 }
