@@ -1,1 +1,68 @@
-# fixter
+# Java Fixture - by The Bored Dev (https://theboreddev.com)
+
+ ## Introduction
+ 
+Java Fixture is a library whose main purpose is to populate test data for our tests in an easy manner.
+
+Java Fixture uses default random generators to populate data based on the type of each element but the default behaviour can be overriden using user-specified suppliers.
+
+## Setup
+
+To be able to use Java Fixture, you'll have to download its dependency in your project using your package manager.
+
+## Usage
+
+#### Initialise a collection of a Java simple type
+
+```java
+List<Integer> integers = Fixture.of(10, Integer.class).apply();
+```
+
+#### Initialise an object
+
+1. Using default populator
+    ```java
+    Employee employee = Fixture.of(Employee.class).apply();
+    ```
+2. Using custom object supplier
+    ```java
+    Employee employee = Fixture.of(Employee.class)
+                    .withSupplier(() -> new Employee(
+                            Random.randomAlphaNumeric(10),
+                            Random.randomAlphaNumeric(10),
+                            Random.randomInt(10),
+                            Random.randomDouble(10000, 100000)
+                    ))
+                    .apply();
+    ```
+3. Using custom field suppliers (uses Reflection)
+    ```java
+    Employee employee = Fixture.of(Employee.class)
+                    .withFieldSupplier("age", () -> Random.randomInt(18, 100))
+                    .apply();
+    ```
+   
+#### Initialise a collection of objects
+
+1. Using default populator
+    ```java
+   List<Employee> employees = Fixture.of(10, Employee.class).apply(); 
+   ```
+2. Using custom object supplier
+    ```java
+    List<Employee> employees = Fixture.of(10, Employee.class).withSupplier(() -> new Employee(
+                    Random.randomAlphaNumeric(10),
+                    Random.randomAlphaNumeric(20),
+                    Random.randomInt(100),
+                    Random.randomDouble(100000)
+            )).apply();
+   ```
+3. Using custom field populators
+    ```java
+    List<Employee> employees = Fixture.of(10, Employee.class)
+                    .withFieldSupplier("age", () -> Random.randomInt(18, 150))
+                    .withFieldSupplier("salary", () -> Random.randomInt(8000, 100000))
+                    .apply();
+   ```
+   
+   
