@@ -17,4 +17,9 @@ public class Random {
         int min = 1;
         return (int) (Math.random() * (limit - min + 1) + min);
     }
+
+    public static double randomDouble(int limit) {
+        double min = 1;
+        return (int) (Math.random() * (limit - min + 1) + min);
+    }
 }

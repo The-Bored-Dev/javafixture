@@ -4,7 +4,7 @@ import java.util.function.Supplier;
 
 public class ElementSupplier<T> {
     private static final int DEFAULT_STRING_SIZE = 5;
-    private static final int DEFAULT_INT_LIMIT = 100;
+    private static final int DEFAULT_LIMIT = 100;
 
     private final Supplier<T> supplier;
     private final Class<?> type;
@@ -33,7 +33,9 @@ public class ElementSupplier<T> {
         if (type.equals(String.class)) {
             return Random.randomAlphaNumeric(DEFAULT_STRING_SIZE);
         } else if (type.equals(Integer.class)) {
-            return Random.randomInt(DEFAULT_INT_LIMIT);
+            return Random.randomInt(DEFAULT_LIMIT);
+        } else if (type.equals(Double.class)) {
+            return Random.randomDouble(DEFAULT_LIMIT);
         }
         throw new IllegalArgumentException("Type not supported!");
     }

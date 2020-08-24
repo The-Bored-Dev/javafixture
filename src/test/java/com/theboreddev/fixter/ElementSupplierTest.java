@@ -27,6 +27,14 @@ public class ElementSupplierTest {
 
         ElementSupplier<Integer> supplier = new ElementSupplier<>(Integer.class);
 
-        assertThat(supplier.supplyElement()).isGreaterThan(0).isLessThan(100);
+        assertThat(supplier.supplyElement()).isGreaterThan(0).isLessThanOrEqualTo(100);
+    }
+
+    @Test
+    public void shouldSupplyIntegerUsingCustomSupplier() {
+
+        ElementSupplier<Integer> supplier = new ElementSupplier<>(() -> Random.randomInt(10), Integer.class);
+
+        assertThat(supplier.supplyElement()).isGreaterThan(0).isLessThanOrEqualTo(10);
     }
 }
