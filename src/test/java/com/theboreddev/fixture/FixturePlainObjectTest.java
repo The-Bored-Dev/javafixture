@@ -1,13 +1,19 @@
 package com.theboreddev.fixture;
 
-import org.junit.Ignore;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.core.Is.is;
 
 public class FixturePlainObjectTest {
+
+    @Rule
+    public final ExpectedException expectedException = ExpectedException.none();
+
 
     @Test
     public void shouldPopulateACollectionOfObjects() {
@@ -40,13 +46,6 @@ public class FixturePlainObjectTest {
                 .allMatch(employee -> employee.getSalary() >= 8000 && employee.getSalary() <= 100000);
     }
 
-    @Ignore("WIP")
-    @Test
-    public void shouldRaiseExceptionIfFieldSupplierIsSpecifiedForASimpleType() {
-
-        Fixture.of(10, String.class).withFieldSupplier("field", () -> Random.randomAlphaNumeric(10));
-    }
-
     @Test
     public void shouldPopulateACollectionOfObjectsWithACustomSupplier() {
 
@@ -58,6 +57,24 @@ public class FixturePlainObjectTest {
         )).apply();
 
         assertThat(employees).hasSize(10).allMatch(this::isValidEmployeeWithSomeRestrictions);
+    }
+
+    @Test
+    public void shouldRaiseExceptionIfFieldSupplierIsSpecifiedForASimpleType() {
+
+        expectedException.expect(IllegalStateException.class);
+        expectedException.expectMessage(is("Cannot specify field supplier if type is not an object!"));
+
+        Fixture.of(10, String.class).withFieldSupplier("field", () -> Random.randomAlphaNumeric(10)).apply();
+    }
+
+    @Test
+    public void shouldRaiseExceptionIfFieldDoesNotExist() {
+
+        expectedException.expect(IllegalArgumentException.class);
+        expectedException.expectMessage(is("Field 'nonExistingField' does not exist!"));
+
+        Fixture.of(10, Employee.class).withFieldSupplier("nonExistingField", () -> Random.randomAlphaNumeric(10)).apply();
     }
 
 

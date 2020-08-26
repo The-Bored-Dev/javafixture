@@ -38,20 +38,24 @@ public abstract class Fixture {
         }
 
         protected <U> FixtureCollectionsProvider withFieldSupplier(String fieldName, Supplier<U> supplier) {
-            if (type.isPrimitive()) {
-                throw new IllegalArgumentException("Cannot set field supplier for a simple type!");
-            }
             this.fieldSuppliers.put(fieldName, supplier);
             return this;
         }
 
         public <T> List<T> apply() {
+            if (isNotAnObjectAndHasFieldSuppliersSet()) {
+                throw new IllegalStateException("Cannot specify field supplier if type is not an object!");
+            }
             return (List<T>) Stream.generate(() ->
                     supplier != null ?
                             new ElementSupplier(supplier, type).supplyElement() :
                             new ElementSupplier<>(fieldSuppliers, type).supplyElement())
                     .limit(size)
                     .collect(toList());
+        }
+
+        private boolean isNotAnObjectAndHasFieldSuppliersSet() {
+            return !type.isMemberClass() && !fieldSuppliers.isEmpty();
         }
     }
 

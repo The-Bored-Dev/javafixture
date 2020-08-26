@@ -40,7 +40,9 @@ public class ObjectSupplier {
                         Field declaredField = object.getClass().getDeclaredField(fieldName);
                         declaredField.setAccessible(true);
                         declaredField.set(object, fieldSuppliers.get(fieldName).get());
-                    } catch (NoSuchFieldException | IllegalAccessException e) {
+                    } catch (NoSuchFieldException e) {
+                        throw new IllegalArgumentException("Field '" + fieldName + "' does not exist!");
+                    } catch (IllegalAccessException e) {
                         e.printStackTrace();
                     }
                 });
