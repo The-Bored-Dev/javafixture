@@ -59,7 +59,6 @@ public abstract class Fixture {
         }
     }
 
-
     static class FixtureObjectProvider extends Fixture {
 
         private FixtureObjectProvider(Class<?> type) {
@@ -72,8 +71,8 @@ public abstract class Fixture {
         }
 
         protected <U> FixtureObjectProvider withFieldSupplier(String fieldName, Supplier<U> supplier) {
-            if (type.isPrimitive()) {
-                throw new IllegalArgumentException("Cannot set field supplier for a simple type!");
+            if (isNotAnObjectAndHasFieldSuppliersSet()) {
+                throw new IllegalStateException("Cannot specify field supplier if type is not an object!");
             }
             this.fieldSuppliers.put(fieldName, supplier);
             return this;
@@ -81,8 +80,12 @@ public abstract class Fixture {
 
         public <T> T apply() {
             return (T) (supplier != null ?
-                                        new ElementSupplier(supplier, type).supplyElement() :
-                                        new ElementSupplier<>(fieldSuppliers, type).supplyElement());
+                    new ElementSupplier(supplier, type).supplyElement() :
+                    new ElementSupplier<>(fieldSuppliers, type).supplyElement());
+        }
+
+        private boolean isNotAnObjectAndHasFieldSuppliersSet() {
+            return !type.isMemberClass() && !fieldSuppliers.isEmpty();
         }
     }
 }
