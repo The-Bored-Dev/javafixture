@@ -4,7 +4,11 @@ import org.junit.Test;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.time.Instant;
+import java.util.Date;
 
+import static java.time.temporal.ChronoUnit.MILLIS;
+import static java.time.temporal.ChronoUnit.SECONDS;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class ElementSupplierTest {
@@ -145,6 +149,25 @@ public class ElementSupplierTest {
         ElementSupplier<Boolean> supplier = new ElementSupplier<>(() -> true, Boolean.class);
 
         assertThat(supplier.supplyElement()).isTrue();
+    }
+
+    @Test
+    public void shouldSupplyADateUsingDefaultSupplier() {
+
+        ElementSupplier<Date> supplier = new ElementSupplier<>(Date.class);
+
+        Date tenSecondsAgo = Date.from(Instant.now().minus(10, SECONDS));
+        assertThat(supplier.supplyElement()).isBetween(tenSecondsAgo, Date.from(Instant.now().plus(1, MILLIS)));
+    }
+
+    @Test
+    public void shouldSupplyADateUsingCustomSupplier() {
+
+        final Date date = Date.from(Instant.parse("1983-06-17T08:30:00.00Z"));
+
+        ElementSupplier<Date> supplier = new ElementSupplier<>(() -> date, Date.class);
+
+        assertThat(supplier.supplyElement()).matches(d -> d.equals(Date.from(Instant.parse("1983-06-17T08:30:00.00Z"))));
     }
 
     @Test

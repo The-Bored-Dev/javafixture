@@ -2,6 +2,8 @@ package com.theboreddev.fixture;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.time.Instant;
+import java.util.Date;
 import java.util.Map;
 import java.util.function.Supplier;
 
@@ -64,6 +66,8 @@ public class ElementSupplier<T> {
         } else if(type.isEnum()) {
             int randomInt = Random.randomInt(0, type.getEnumConstants().length - 1);
             return type.getEnumConstants()[randomInt];
+        } else if (type.equals(Date.class)) {
+            return Date.from(Instant.now());
         } else {
             return ObjectSupplier.supplyObject(type, fieldSuppliers);
         }
