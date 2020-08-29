@@ -23,6 +23,8 @@ jobs:
       # Customize the JVM maximum heap limit
       JVM_OPTS: -Xmx3200m
       TERM: dumb
+      SONATYPE_USERNAME: secrethub://theboreddev/start/secrets/sonatype/username
+      SONATYPE_PASSWORD: secrethub://theboreddev/start/secrets/sonatype/password
 
     steps:
       - checkout
@@ -34,7 +36,7 @@ jobs:
             # fallback to using the latest cache if no exact match is found
             - v1-dependencies-
 
-      - run: gradle dependencies
+      - run: gradle dependencies -Pusr="$SONATYPE_USERNAME" -Ppwd="$SONATYPE_PASSWORD"
 
       - save_cache:
           paths:
@@ -52,8 +54,6 @@ jobs:
     environment:
       JVM_OPTS: -Xmx3200m
       TERM: dumb
-      SONATYPE_USERNAME: secrethub://theboreddev/start/secrets/sonatype/username
-      SONATYPE_PASSWORD: secrethub://theboreddev/start/secrets/sonatype/password
 
     steps:
       - checkout
