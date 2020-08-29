@@ -21,6 +21,25 @@ publishing {
             pom {
                 name = 'Java Fixture'
                 description = 'A Java library to generate random test data'
+
+                licenses {
+                    license {
+                        name = 'MIT License'
+                        url = 'https://github.com/theboreddev/javafixture/blob/master/LICENSE'
+                    }
+                }
+                developers {
+                    developer {
+                        id = 'theboreddev'
+                        name = 'The Bored Dev'
+                        email = 'account@theboreddev.com'
+                    }
+                }
+                scm {
+                    connection = 'git@github.com:theboreddev/javafixture.git'
+                    developerConnection = 'git@github.com:theboreddev/javafixture.git'
+                    url = 'https://github.com/theboreddev/javafixture.git'
+                }
             }
         }
     }
