@@ -1,5 +1,6 @@
 plugins {
     id 'java'
+    id 'maven-publish'
 }
 
 group 'com.theboreddev'
@@ -7,6 +8,34 @@ version '1.0-SNAPSHOT'
 
 repositories {
     mavenCentral()
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            groupId = 'com.theboreddev'
+            artifactId = 'javafixture'
+            version = '1.0-SNAPSHOT'
+            from components.java
+
+            pom {
+                name = 'Java Fixture'
+                description = 'A Java library to generate random test data'
+            }
+        }
+    }
+
+    repositories {
+        maven {
+            credentials {
+                username = "$usr"
+                password = "$pwd"
+            }
+
+            url = "https://oss.sonatype.org/content/repositories/snapshots"
+//            url = "https://oss.sonatype.org/service/local/staging/deploy/maven2"
+        }
+    }
 }
 
 dependencies {
