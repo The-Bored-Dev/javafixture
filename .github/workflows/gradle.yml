@@ -22,5 +22,10 @@ jobs:
         java-version: 11
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
+    - uses: secrethub/actions/env-export@v0.1.0
+        env:
+          SECRETHUB_CREDENTIAL: ${{ secrets.SECRETHUB_CREDENTIAL }}
+          SONATYPE_USERNAME: secrethub://theboreddev/start/secrets/sonatype/username
+          SONATYPE_PASSWORD: secrethub://theboreddev/start/secrets/sonatype/password
     - name: Build with Gradle
-      run: ./gradlew clean test
+      run: ./gradlew clean test -Pusr="$SONATYPE_USERNAME" -Ppwd="$SONATYPE_PASSWORD"
