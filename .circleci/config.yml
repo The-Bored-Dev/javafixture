@@ -45,4 +45,3 @@ jobs:
 
       # run tests!
       - run: gradle test -Pusr="$SONATYPE_USERNAME" -Ppwd="$SONATYPE_PASSWORD"
-      - run: gradle release -Pusr="$SONATYPE_USERNAME" -Ppwd="$SONATYPE_PASSWORD"
