@@ -29,3 +29,5 @@ jobs:
         SONATYPE_PASSWORD: secrethub://theboreddev/start/secrets/sonatype/password
     - name: Build with Gradle
       run: ./gradlew clean test -Pusr="$SONATYPE_USERNAME" -Ppwd="$SONATYPE_PASSWORD"
+    - name: Release
+      run: ./gradlew release -Pusr="$SONATYPE_USERNAME" -Ppwd="$SONATYPE_PASSWORD"
