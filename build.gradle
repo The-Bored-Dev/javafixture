@@ -6,7 +6,7 @@ plugins {
 
 scmVersion {
     tag {
-        initialVersion = { "1.0.0" }
+        initialVersion = {config, position -> "1.0.0"}
     }
 }
 
