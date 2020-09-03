@@ -4,6 +4,12 @@ plugins {
     id 'pl.allegro.tech.build.axion-release' version '1.12.0'
 }
 
+scmVersion {
+    tag {
+        initialVersion = {config, position -> '1.0.0'}
+    }
+}
+
 group 'com.theboreddev'
 project.version = scmVersion.version
 
