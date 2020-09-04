@@ -10,6 +10,8 @@ Java Fixture uses default random generators to populate data based on the type o
 
 To be able to use Java Fixture, you'll have to download its dependency in your project using your package manager.
 
+(Pending - Package will be available soon)
+
 ## Usage
 
 ### Initialise a collection of a Java simple type
